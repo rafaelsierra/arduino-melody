@@ -5,24 +5,7 @@
 #include <math.h>
 
 Melody::Melody(int pin){
-    // From: http://en.wikipedia.org/wiki/Scientific_pitch_notation
-    // Values are rounded to avoid lots of floats/double
-    A=1; As=2; B=3; C=4; Cs=5; D=6; Ds=7; E=8; F=9; Fs=10; G=11; Gs=12;
-    
     _pin = pin;
-    tempo = (int)((20.0/60.0)*1000); // TODO: set/get 
-
-    // Is this really the best way to do this?
-    int _tetris[] = {
-        G,G,G,D,E,F,F,E,D,C,C,C,E,G,G,F,E,D,D,D,E,F,G,E,C,C,C,
-        F,F,F,A+12,C+12,B+12,A+12,G,G,E,G,F,E,D,D,D,E,F,G,E,C,C,C,-1
-    };
-    //int _tetris[] = {E,E,B,C,D,C,D,B,A,A,C,E,D,C,B,C,D,E,C,A,A,D,F,A+12,G,F,E,C,E,D,C,B,B,C,D,E,C,A,A,E,C,D,B,C,A,Gs-12,B,E,C,D,B+12,A,C,A,Gs};
-    this->tetris_size = 51;
-    int memsize = this->tetris_size*sizeof(int);
-    this->tetris = (int *)malloc(memsize);    
-    memcpy(this->tetris, _tetris, memsize);
-    free(_tetris);
 
     // Set the default octave 
     this->octave = 4;
@@ -32,7 +15,7 @@ Melody::Melody(int pin){
 }
 
 Melody::~Melody(){
-    free(this->tetris);
+    
 }
 
 void Melody::setOctave(int octave){
@@ -40,7 +23,8 @@ void Melody::setOctave(int octave){
 }
 
 int Melody::getFreq(int note, int pitch){
-    return (int)(440.0 * pow(1.059463094359,(note+12*pitch)-(A+48)));
+    // TODO: Fix this since there there is no A anymore
+    //return (int)(440.0 * pow(1.059463094359,(note+12*pitch)-(A+48)));
 }
 
 void Melody::play(int *riff, int size){
