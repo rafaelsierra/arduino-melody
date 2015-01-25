@@ -2,6 +2,26 @@
 #define MELODY_RS
 
 #define MELODY_DEBUG 0
+/*
+ * Each note contains information about:
+ *  the note it self (from A to G)
+ *  its duration  (from 0 to 7 units-of-time)
+ *  its octave (from 0 to 7), note that octaves are not absolute, it depends 
+ *      on thee Melody::setOctave() value, so you can go as far as 4 octaves 
+ *      above the default
+ *  if its a pause
+ */
+
+/*
+ * Note structure:
+ * int C = B0000000000000000
+ *               || || ||  |
+ *               || || |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
+ *               || |+-+--> Its duration
+ *               |+-+-> Its octave 
+ *               +-> Is it a pause? (0=no, 1=yes, duh...)
+ */
+
 // MN means Melody Note
 #define MN_A 0x1
 #define MN_As 0x2

@@ -7,7 +7,7 @@
 Melody::Melody(int pin){
     _pin = pin;
 
-    // Set the default octave 
+    // Set the base octave, every note will play above this octave
     this->octave = 4;
 
     // Set the pin
