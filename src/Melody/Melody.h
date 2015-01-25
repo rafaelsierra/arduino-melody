@@ -5,7 +5,7 @@
 /*
  * Each note contains information about:
  *  the note it self (from A to G)
- *  its duration  (from 0 to 7 units-of-time)
+ *  its duration  (from 1 to 32 beats)
  *  its octave (from 0 to 7), note that octaves are not absolute, it depends 
  *      on thee Melody::setOctave() value, so you can go as far as 4 octaves 
  *      above the default
@@ -15,11 +15,11 @@
 /*
  * Note structure:
  * int C = B0000000000000000
- *               || || ||  |
- *               || || |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
- *               || |+-+--> Its duration
- *               |+-+-> Its octave 
- *               +-> Is it a pause? (0=no, 1=yes, duh...)
+ *             || ||   ||  |
+ *             || ||   |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
+ *             || |+---+--> Its duration
+ *             |+-+-> Its octave 
+ *             +-> Is it a pause? (0=no, 1=yes, duh...)
  */
 
 // MN means Melody Note
@@ -41,6 +41,8 @@
 #define MN_Gs 0xc
 #define MN_Ab 0xc
 
+#define MN_PAUSE = 0x1000
+
 #define MN_D1 0x10
 #define MN_D2 0x20
 #define MN_D3 0x30
@@ -48,17 +50,42 @@
 #define MN_D5 0x50
 #define MN_D6 0x60
 #define MN_D7 0x70
+#define MN_D8 0x80
+#define MN_D9 0x90
+#define MN_D10 0xa0
+#define MN_D11 0xb0
+#define MN_D12 0xc0
+#define MN_D13 0xd0
+#define MN_D14 0xe0
+#define MN_D15 0xf0
+#define MN_D16 0x100
+#define MN_D17 0x110
+#define MN_D18 0x120
+#define MN_D19 0x130
+#define MN_D20 0x140
+#define MN_D21 0x150
+#define MN_D22 0x160
+#define MN_D23 0x170
+#define MN_D24 0x180
+#define MN_D25 0x190
+#define MN_D26 0x1a0
+#define MN_D27 0x1b0
+#define MN_D28 0x1c0
+#define MN_D29 0x1d0
+#define MN_D30 0x1e0
+#define MN_D31 0x1f0
 
-#define MN_O1 0x80
-#define MN_O2 0x100
-#define MN_O3 0x180
-#define MN_O4 0x200
-#define MN_O5 0x280
-#define MN_O6 0x300
-#define MN_O7 0x380
+// TODO: Octaves below
+#define MN_O0 0x200 // This uses the current octave
+#define MN_O1 0x400
+#define MN_O2 0x600
+#define MN_O3 0x800
+#define MN_O4 0xa00
+#define MN_O5 0xc00
+#define MN_O6 0xe00
 
 // MND means Melody Note Default
-#define MND_DO MN_D1 | MN_O1
+#define MND_DO MN_D2 | MN_O0
 #define MND_A MND_DO | MN_A
 #define MND_B MND_DO | MN_B
 #define MND_C MND_DO | MN_C
@@ -69,7 +96,6 @@
 #define MND_PAUSE MND_DO | MN_PAUSE
 
 
-#define MN_PAUSE = 0x200
 
 #include "Arduino.h"
 
@@ -81,6 +107,8 @@ class Melody{
     void play(int *riff, int size);
     void play();
     void setOctave(int octave);
+
+    void setTempo(int tempo);
 
     int getFreq(int note, int pitch);
     #if MELODY_DEBUG==1

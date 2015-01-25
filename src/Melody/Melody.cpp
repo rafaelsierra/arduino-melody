@@ -9,7 +9,8 @@ Melody::Melody(int pin){
 
     // Set the base octave, every note will play above this octave
     this->octave = 4;
-
+    // Set the default tempo in bpm, two beats per second
+    this->tempo = 120;
     // Set the pin
     pinMode(_pin, OUTPUT);   
 }
@@ -20,6 +21,10 @@ Melody::~Melody(){
 
 void Melody::setOctave(int octave){
     this->octave = octave;
+}
+
+void Melody::setTempo(int tempo){
+    this->tempo = tempo;
 }
 
 int Melody::getFreq(int note, int pitch){
@@ -37,29 +42,17 @@ void Melody::play(int *riff, int size){
     lastMillis = millis();
     // Plays the first note
     currentNote = 0;
-    if(this->riff[0] >= 0){
-    	tone(_pin, getFreq(this->riff[0],octave)); 
-    }
-
 }
 
 void Melody::play(){
-    // TODO: Loop over maximum time
-    delta += millis()-lastMillis;
-    lastMillis = millis();
-
-    if(delta >= tempo){
-        delta = 0;
-        currentNote = (currentNote+1 >= riffSize)?0:currentNote+1;
-        noTone(_pin);
-	    if(riff[currentNote] >= 0){	
-            int f = getFreq(riff[currentNote],this->octave);
-            tone(_pin, f);
-            #if MELODY_DEBUG==1
-            this->print->println(f);
-            #endif
-        }
+    if(currentNote >= this->riffSize){
+        currentNote = 0;
     }
+
+
+
+    currentNote++;
+    
 }
 #if MELODY_DEBUG==1
 void Melody::setSerial(Print &print){
