@@ -3,29 +3,39 @@
 
 #define MELODY_DEBUG 0
 // MN means Melody Note
-#define MN_A = 0x1
-#define MN_B = 0x2
-#define MN_C = 0x3
-#define MN_D = 0x4
-#define MN_E = 0x5
-#define MN_F = 0x6
-#define MN_G = 0x7
+#define MN_A 0x1
+#define MN_As 0x2
+#define MN_Bb 0x2
+#define MN_B 0x3
+#define MN_C 0x4
+#define MN_Cs 0x5
+#define MN_Db 0x5
+#define MN_D 0x6
+#define MN_Ds 0x7
+#define MN_Eb 0x7
+#define MN_E 0x8
+#define MN_F 0x9
+#define MN_Fs 0xa
+#define MN_Gb 0xa
+#define MN_G 0xb
+#define MN_Gs 0xc
+#define MN_Ab 0xc
 
-#define MN_D1 = 0x8
-#define MN_D2 = 0x10
-#define MN_D3 = 0x18
-#define MN_D4 = 0x20
-#define MN_D5 = 0x28
-#define MN_D6 = 0x30
-#define MN_D7 = 0x38
+#define MN_D1 0x10
+#define MN_D2 0x20
+#define MN_D3 0x30
+#define MN_D4 0x40
+#define MN_D5 0x50
+#define MN_D6 0x60
+#define MN_D7 0x70
 
-#define MN_O1 = 0x40
-#define MN_O2 = 0x80
-#define MN_O3 = 0xc0
-#define MN_O4 = 0x100
-#define MN_O5 = 0x140
-#define MN_O6 = 0x180
-#define MN_O7 = 0x1c0
+#define MN_O1 0x80
+#define MN_O2 0x100
+#define MN_O3 0x180
+#define MN_O4 0x200
+#define MN_O5 0x280
+#define MN_O6 0x300
+#define MN_O7 0x380
 
 // MND means Melody Note Default
 #define MND_DO MN_D1 | MN_O1

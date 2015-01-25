@@ -15,13 +15,13 @@
 /*
  * Note structure:
  * int C = B0000000000000000
- *                || || || |
- *		          || || |+-+> Note you are playing 000=A, 001=B, 010=C, ..., 111=G
- *                || |+-+--> Its duration
- *                |+-+-> Its octave 
- *                +-> Is it a pause? (0=no, 1=yes, duh...)
+ *               || || ||  |
+ *		         || || |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
+ *               || |+-+--> Its duration
+ *               |+-+-> Its octave 
+ *               +-> Is it a pause? (0=no, 1=yes, duh...)
  */
-#include <Melody.h>
- 
-int sample_music[] = {, B00000011, B00000100,};
-int sample_music_size = 
+#include "Melody.h"
+
+int sample_music[] = {MND_C, MND_D, MND_E, MN_F | MN_D2, MND_F, MND_F, MND_C, MND_D, MND_C, MND_D, MND_D, MND_D, MND_C, MND_E, MND_F, MND_E, MND_E, MND_E, MND_C, MND_D, MND_E, MN_F | MN_D2, MND_F, MND_F};
+int sample_music_size = 24;
