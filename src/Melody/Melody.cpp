@@ -28,8 +28,16 @@ void Melody::setTempo(int tempo){
 }
 
 int Melody::getFreq(int note, int pitch){
-    // TODO: Fix this since there there is no A anymore
-    //return (int)(440.0 * pow(1.059463094359,(note+12*pitch)-(A+48)));
+    if(note & MN_PAUSE) return 0;
+
+    // Clear every other bit so we have only the number of the note, from 0 to 12
+    int octave = (note&MN_OCTAVE_MASK)>>MN_OCTAVE_PAD;
+    note &= MN_NOTE_MASK;
+
+    int note_pos = ((this->octave+octave)*12)+note;
+    int n = note_pos - MN_A4;
+
+    return (int)(pow(2, n/12)*400);
 }
 
 void Melody::play(int *riff, int size){

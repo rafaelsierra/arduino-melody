@@ -41,7 +41,7 @@
 #define MN_Gs 0xc
 #define MN_Ab 0xc
 
-#define MN_PAUSE = 0x1000
+#define MN_PAUSE 0x1000
 
 #define MN_D1 0x10
 #define MN_D2 0x20
@@ -95,7 +95,13 @@
 #define MND_G MND_DO | MN_G
 #define MND_PAUSE MND_DO | MN_PAUSE
 
+#define MN_NOTE_MASK 0xf
+#define MN_DURATION_MASK 0x1f0
+#define MN_OCTAVE_MASK 0xe00
+#define MN_OCTAVE_PAD 9
 
+// DO NOT USE A4 AS NOTE! Use MN_A | MN_O4 instead!
+#define MN_A4 ((4*12)+MN_A) // 4th octave, A. Used as reference the get the correct frequency
 
 #include "Arduino.h"
 
