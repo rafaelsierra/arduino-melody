@@ -10,7 +10,7 @@ Melody::Melody(int pin){
     // Set the base octave, every note will play above this octave
     this->octave = 4;
     // Set the default tempo in bpm, two beats per second
-    this->tempo = 120;
+    this->setTempo(120);
     // Set the pin
     pinMode(_pin, OUTPUT);   
 }
@@ -25,9 +25,10 @@ void Melody::setOctave(int octave){
 
 void Melody::setTempo(int tempo){
     this->tempo = tempo;
+    this->millisPerBeat = (int)(tempo/60.0)*1000;
 }
 
-int Melody::getFreq(int note, int pitch){
+int Melody::getFreq(int note){
     if(note & MN_PAUSE) return 0;
 
     // Clear every other bit so we have only the number of the note, from 0 to 12
@@ -48,6 +49,8 @@ void Melody::play(int *riff, int size){
     // Restart the timer
     delta = 0;
     lastMillis = millis();
+
+    noTone(this->pin);
     // Plays the first note
     currentNote = 0;
 }
@@ -56,12 +59,23 @@ void Melody::play(){
     if(currentNote >= this->riffSize){
         currentNote = 0;
     }
+    this->delta = millis() - this->lastMillis;
+    
+    if(this->delta > this->millisPerBeat){
+        this->lastMillis = millis();
+        currentNote++;
+        if(currentNote >= riffSize) currentNote = 0;
+    }
 
-
-
+    int freq = getFreq(riff[currentNote]);
+    noTone(this->pin);
+    if(freq > 0){
+        tone(this->pin, freq);
+    }
     currentNote++;
     
 }
+
 #if MELODY_DEBUG==1
 void Melody::setSerial(Print &print){
     this->print = &print;

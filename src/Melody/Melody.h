@@ -15,9 +15,10 @@
 /*
  * Note structure:
  * int C = B0000000000000000
- *             || ||   ||  |
- *             || ||   |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
- *             || |+---+--> Its duration
+ *             || |||  ||  |
+ *             || |||  |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
+ *             || ||+--+--> Its duration
+ *             || |+-> If its tempo is a fraction of the tempo or double it
  *             |+-+-> Its octave 
  *             +-> Is it a pause? (0=no, 1=yes, duh...)
  */
@@ -58,22 +59,6 @@
 #define MN_D13 0xd0
 #define MN_D14 0xe0
 #define MN_D15 0xf0
-#define MN_D16 0x100
-#define MN_D17 0x110
-#define MN_D18 0x120
-#define MN_D19 0x130
-#define MN_D20 0x140
-#define MN_D21 0x150
-#define MN_D22 0x160
-#define MN_D23 0x170
-#define MN_D24 0x180
-#define MN_D25 0x190
-#define MN_D26 0x1a0
-#define MN_D27 0x1b0
-#define MN_D28 0x1c0
-#define MN_D29 0x1d0
-#define MN_D30 0x1e0
-#define MN_D31 0x1f0
 
 // TODO: Octaves below
 #define MN_O0 0x200 // This uses the current octave
@@ -116,7 +101,7 @@ class Melody{
 
     void setTempo(int tempo);
 
-    int getFreq(int note, int pitch);
+    int getFreq(int note);
     #if MELODY_DEBUG==1
         void setSerial(Print &print);
         Print *print;
@@ -124,8 +109,11 @@ class Melody{
   private:
     int _pin;
     int octave;
+    
     unsigned int delta;
     unsigned long lastMillis;
+    int millisPerBeat;
+
     int *riff;
     int riffSize;
     int tempo;
