@@ -18,7 +18,7 @@
  *             || |||  ||  |
  *             || |||  |+--+-> Note you are playing 0001=A, 0010=A#/Bb, 0011=C, ..., 1100=G#/Ab
  *             || ||+--+--> Its duration
- *             || |+-> If its tempo is a fraction of the tempo or double it
+ *             || |+-> If its tempo is a fraction or double it
  *             |+-+-> Its octave 
  *             +-> Is it a pause? (0=no, 1=yes, duh...)
  */
@@ -60,6 +60,8 @@
 #define MN_D14 0xe0
 #define MN_D15 0xf0
 
+#define MN_TEMPO 0x100
+
 // TODO: Octaves below
 #define MN_O0 0x200 // This uses the current octave
 #define MN_O1 0x400
@@ -70,7 +72,7 @@
 #define MN_O6 0xe00
 
 // MND means Melody Note Default
-#define MND_DO MN_D2 | MN_O0
+#define MND_DO MN_D4
 #define MND_A MND_DO | MN_A
 #define MND_B MND_DO | MN_B
 #define MND_C MND_DO | MN_C
@@ -81,9 +83,10 @@
 #define MND_PAUSE MND_DO | MN_PAUSE
 
 #define MN_NOTE_MASK 0xf
-#define MN_DURATION_MASK 0x1f0
+#define MN_DURATION_MASK 0xf0
 #define MN_OCTAVE_MASK 0xe00
 #define MN_OCTAVE_PAD 9
+#define MN_DURATION_PAD 4
 
 // DO NOT USE A4 AS NOTE! Use MN_A | MN_O4 instead!
 #define MN_A4 ((4*12)+MN_A) // 4th octave, A. Used as reference the get the correct frequency

@@ -24,5 +24,5 @@
  * 
  * Below there is a sample music using default notes (MND_A to MND_G)
  */
-int sample_music[] = {MND_C, MND_D, MND_E, MN_F | MN_D2, MND_F, MND_F, MND_C, MND_D, MND_C, MND_D, MND_D, MND_D, MND_C, MND_E, MND_F, MND_E, MND_E, MND_E, MND_C, MND_D, MND_E, MN_F | MN_D2, MND_F, MND_F};
-int sample_music_size = 24;
+int sample_music[] = {MND_C, MND_D, MND_E, MN_F | MN_D4, MND_F, MND_F, MND_C, MND_D, MND_C, MND_D, MND_D, MND_D, MND_C, MND_G, MND_F, MN_E | MN_D4, MND_E, MND_E, MND_C, MND_D, MND_E, MN_F | MN_D4, MND_F, MND_F, MN_PAUSE | MN_D2};
+int sample_music_size = 25;

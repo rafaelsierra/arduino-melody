@@ -20,6 +20,8 @@ Melody::~Melody(){
 }
 
 void Melody::setOctave(int octave){
+    this->print->print("New octave: ");
+    this->print->println(octave);
     this->octave = octave;
 }
 
@@ -46,34 +48,45 @@ void Melody::play(int *riff, int size){
     int memsize = riffSize*sizeof(int);
     this->riff = (int *)malloc(memsize);
     memcpy(this->riff, riff, memsize);
+    
     // Restart the timer
     delta = 0;
     lastMillis = millis();
 
     noTone(this->_pin);
+
     // Plays the first note
     currentNote = 0;
 }
 
 void Melody::play(){
-    if(currentNote >= this->riffSize){
-        currentNote = 0;
-    }
     this->delta = millis() - this->lastMillis;
+    int beats = this->millisPerBeat;
     
-    if(this->delta > this->millisPerBeat){
+    // Checks for the note tempo
+    int duration = (riff[currentNote] & MN_DURATION_MASK) >> MN_DURATION_PAD;
+    if(riff[currentNote] & MN_TEMPO){
+        beats *= duration;
+    }else{
+        beats = (int)(beats/duration);
+    }
+    
+
+    if(this->delta > beats){
         this->lastMillis = millis();
+        
+        int freq = getFreq(riff[currentNote]);
+        this->print->print(currentNote);
+        this->print->print(": ");
+        this->print->println(freq);
+        noTone(this->_pin);
+        if(freq > 0){
+            tone(this->_pin, freq);
+        }
         currentNote++;
         if(currentNote >= riffSize) currentNote = 0;
     }
 
-    int freq = getFreq(riff[currentNote]);
-    this->print->println(freq);
-    noTone(this->_pin);
-    if(freq > 0){
-        tone(this->_pin, freq);
-    }
-    currentNote++;
     
 }
 
