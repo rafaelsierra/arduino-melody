@@ -34,11 +34,11 @@ int Melody::getFreq(int note){
     // Clear every other bit so we have only the number of the note, from 0 to 12
     int octave = (note&MN_OCTAVE_MASK)>>MN_OCTAVE_PAD;
     note &= MN_NOTE_MASK;
-
+    
     int note_pos = ((this->octave+octave)*12)+note;
     int n = note_pos - MN_A4;
 
-    return (int)(pow(2, n/12)*400);
+    return (int)(pow(2, n/12.0)*440);
 }
 
 void Melody::play(int *riff, int size){
@@ -50,7 +50,7 @@ void Melody::play(int *riff, int size){
     delta = 0;
     lastMillis = millis();
 
-    noTone(this->pin);
+    noTone(this->_pin);
     // Plays the first note
     currentNote = 0;
 }
@@ -68,9 +68,10 @@ void Melody::play(){
     }
 
     int freq = getFreq(riff[currentNote]);
-    noTone(this->pin);
+    this->print->println(freq);
+    noTone(this->_pin);
     if(freq > 0){
-        tone(this->pin, freq);
+        tone(this->_pin, freq);
     }
     currentNote++;
     

@@ -1,7 +1,7 @@
 #ifndef MELODY_RS
 #define MELODY_RS
 
-#define MELODY_DEBUG 0
+#define MELODY_DEBUG 1
 /*
  * Each note contains information about:
  *  the note it self (from A to G)
